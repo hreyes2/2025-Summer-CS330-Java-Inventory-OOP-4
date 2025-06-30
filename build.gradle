@@ -52,7 +52,7 @@ run {
 }
 
 application {
-    mainClass = "polyhedra.CreatePolyhedra"
+    mainClass = "edu.odu.cs.cs330.Storage"
 }
 
 test {
