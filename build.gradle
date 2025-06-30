@@ -55,6 +55,15 @@ application {
     mainClass = "edu.odu.cs.cs330.Storage"
 }
 
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+
+        }
+    }
+}
+
 test {
     ignoreFailures = true
 
