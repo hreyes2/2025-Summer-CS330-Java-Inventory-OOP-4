@@ -5,7 +5,7 @@ import edu.odu.cs.cs330.items.Item;
 public interface ItemCreationStrategy
 {
     /**
-     * Create an item using deafult values.
+     * Create an item using default values.
      */
     Item fromDefaults();
 
