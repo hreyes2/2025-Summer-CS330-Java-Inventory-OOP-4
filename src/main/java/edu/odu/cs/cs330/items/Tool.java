@@ -1,5 +1,7 @@
 package edu.odu.cs.cs330.items;
 
+import java.util.Objects;
+
 /**
  * This class represents one tool--as found in most video games. This includes
  * pickaxes and shovels.
@@ -72,10 +74,20 @@ public class Tool extends Equippable implements Item {
     @Override
     public Item clone()
     {
+    	//create new instance of tool
         Tool cpy = new Tool();
-
-        cpy.setName(this.name);
-
+        
+        //retrieve fields
+        cpy.setName(this.getName());
+        cpy.setDurability(this.getDurability());
+        cpy.setMaterial(this.getMaterial());
+        cpy.setModifier(this.getModifier());
+        cpy.setModifierLevel(this.getModifierLevel());
+        cpy.setElement(this.getElement());
+        
+        //need to retrieve the unique fields from tools
+        cpy.setSpeed(this.getSpeed());
+        //once all fields retrieved, return the copy
         return cpy;
     }
 
@@ -87,14 +99,22 @@ public class Tool extends Equippable implements Item {
      */
     @Override
     public boolean equals(Object rhs)
-    {
+    {	
+    	//if at same memory location return true
+    	if (this == rhs) {
+    		return true;
+    	}
         if (!(rhs instanceof Tool)) {
             return false;
         }
-
+        
+        //if not at same memory location, type cast to Tool and compare
         Tool rhsItem = (Tool) rhs;
-
-        return false;
+        return Objects.equals(this.getName(), rhsItem.getName())
+        		&& Objects.equals(this.getSpeed(), rhsItem.getSpeed())
+        		&& Objects.equals(this.getMaterial(), rhsItem.getMaterial())
+        		&& Objects.equals(this.getModifier(), rhsItem.getModifier())
+        		&& Objects.equals(this.getModifierLevel(), rhsItem.getModifierLevel());
     }
 
     /**
@@ -104,13 +124,20 @@ public class Tool extends Equippable implements Item {
     @Override
     public int hashCode()
     {
-        int hash = this.getName().hashCode();
-        hash += 2 * this.getMaterial().hashCode();
-        hash += 4 * this.getModifier().hashCode();
-        hash += 8 * this.getModifierLevel();
-        hash += 32 * this.getSpeed();
-
-        return hash;
+//        int hash = this.getName().hashCode();
+//        hash += 2 * this.getMaterial().hashCode();
+//        hash += 4 * this.getModifier().hashCode();
+//        hash += 8 * this.getModifierLevel();
+//        hash += 32 * this.getSpeed();
+//
+//        return hash;
+        return Objects.hash(
+        		getName(),
+        		getSpeed(),
+        		getMaterial(),
+        		getModifier(),
+        		getModifierLevel()
+        		);
     }
 
     /**
@@ -119,6 +146,13 @@ public class Tool extends Equippable implements Item {
     @Override
     public String toString()
     {
-        return "String.format(FMT_STR, ...)";
+        return String.format(FMT_STR, 
+        		getName(),
+        		getDurability(),
+        		getSpeed(),
+        		getMaterial(),
+        		getModifier(),
+        		getModifierLevel()
+        		);
     }
 }

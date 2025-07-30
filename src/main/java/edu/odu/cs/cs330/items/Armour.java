@@ -75,7 +75,18 @@ public class Armour extends Equippable implements Item
     public Item clone()
     {
         Armour cpy = new Armour();
-
+        //copy the fields that we have by way of extending equippable class
+        cpy.setName(this.getName());
+        cpy.setDurability(this.getDurability());
+        cpy.setMaterial(this.getMaterial());
+        cpy.setModifier(this.getModifier());
+        cpy.setModifierLevel(this.getModifierLevel());
+        cpy.setElement(this.getElement());
+        //defense is a unique field to the armour class but we need it to make a copy
+        //could have used cpy.defense = this.defense; but instead we will use the setter and getter for defense
+        cpy.setDefense(this.getDefense());
+        
+        //return cpy once we have all fields
         return cpy;
     }
 
@@ -88,13 +99,28 @@ public class Armour extends Equippable implements Item
     @Override
     public boolean equals(Object rhs)
     {
+    	//see if point to same location in memory, if so return true
+    	//this points to current object and rhs will be provided as an argument
+    	if (this == rhs) {
+    		return true;
+    	}
+    	
+    	//return false because we know instantly the comparison will fail
         if (!(rhs instanceof Armour)) {
             return false;
         }
-
+        
+        //need to find 2 objects that are equal that ARE NOT at the same memory location
+        //since we confirmed that rhs is of type Armour, we can cast Armour to rhs so that we can access the armour fields 
+        //if we do not type cast to Armour it will be casted as "Object" by default
         Armour rhsItem = (Armour) rhs;
 
-        return false;
+        return Objects.equals(this.name, rhsItem.name)
+        		&& Objects.equals(this.getMaterial(), rhsItem.getMaterial())
+        		&& Objects.equals(this.getModifier(), rhsItem.getModifier())
+        		&& Objects.equals(this.getModifierLevel(), rhsItem.getModifierLevel())
+        		&& Objects.equals(this.getElement(), rhsItem.getElement())
+        		&& Objects.equals(this.getDefense(), rhsItem.getDefense());
     }
 
     /**
@@ -104,7 +130,16 @@ public class Armour extends Equippable implements Item
     @Override
     public int hashCode()
     {
-        return -1;
+    		//simply call Objects.hash
+        return Objects.hash(
+        		name,
+        		getMaterial(),
+        		getModifier(),
+        		getModifierLevel(),
+        		getElement(),
+        		getDefense()
+        		
+        		);
     }
 
     /**
@@ -113,7 +148,16 @@ public class Armour extends Equippable implements Item
     @Override
     public String toString()
     {
-        return "Use the provided format string";
+    	//call String.format using format provided above
+        return String.format(
+        		FMT_STR, 
+        		name, 
+        		getDurability(), 
+        		getDefense(),
+        		getMaterial(), 
+        		getModifier(),
+        		getModifierLevel(), 
+        		getElement());
     }
 }
 

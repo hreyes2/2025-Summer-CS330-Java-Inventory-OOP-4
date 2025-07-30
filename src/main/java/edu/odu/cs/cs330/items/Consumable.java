@@ -1,5 +1,7 @@
 package edu.odu.cs.cs330.items;
 
+import java.util.Objects;
+
 /**
  * This class represents one Consumable Item--as found in most video games.
  * This includes food.
@@ -118,7 +120,10 @@ public class Consumable implements Item {
     public Item clone()
     {
         Consumable cpy = new Consumable();
-
+        cpy.setName(this.getName());
+        cpy.setNumberOfUses(this.getNumberOfUses());
+        cpy.setEffect(this.getEffect());
+        //once all fields collected, return cpy
         return cpy;
     }
 
@@ -128,15 +133,23 @@ public class Consumable implements Item {
      * @param rhs object for which a comparison is desired
      */
     @Override
+    
+    //clone and hashcode must be completed before equals can be used to compare
     public boolean equals(Object rhs)
     {
+    	//if at same same memory location, return true
+    	if (this == rhs) {
+    		return true;
+    	}
         if (!(rhs instanceof Consumable)) {
             return false;
         }
-
+        
+        //if not at same memory location cast type to Consumable and use Consumable getters
         Consumable rhsItem = (Consumable) rhs;
-
-        return false;
+        return Objects.equals(this.getName(), rhsItem.getName())
+        		&& Objects.equals(this.getEffect(), rhsItem.getEffect())
+        		;
     }
 
     /**
@@ -148,15 +161,24 @@ public class Consumable implements Item {
     @Override
     public int hashCode()
     {
-        return -1;
+        return Objects.hash(
+        		getName(), 
+        		getEffect()
+        		);
+        	
     }
 
     /**
      * *Print* the Consumable Item.
      */
     @Override
+    //simply call String.format and use the FMT_STR specified above
     public String toString()
     {
-        return "Not Implemented";
+        return String.format(
+        		FMT_STR, 
+        		getName(),
+        		getEffect(),
+        		getNumberOfUses());
     }
 }
